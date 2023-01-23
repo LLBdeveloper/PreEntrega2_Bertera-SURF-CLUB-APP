@@ -210,6 +210,7 @@ function verTodas(){
 
 //Ver catalogo
 function verTablas(tablas){
+    alert(`Tenemos ${tablas.length} modelos diferentes para ofrecerte.`)
     tablas.forEach((tabla)=>{
         alert(`MODELO: 
                     ${tabla.nombre} 
