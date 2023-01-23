@@ -1,5 +1,90 @@
+// //Funciones que retornan otra funcion
+// //Creamos la funcion
+// function mayorQue(n){
+//     return (m) => m > n 
+// }
+
+// //declaramos
+// let mayorQueDoce = mayorQue (12)
+// // meyorQueDoce es (m) => m > 12
+
+// //la usamos
+// console.log(mayorQueDoce(25))
+// //true
+
+
+// //////
+
+
+// //FUNCTION QUE RECIBE OTRA FUNCTION
+// const num2 = [2,4,6]
+// //porCadaUno al tener una funcion como parametro se las considera funcion de orden superior
+// function porCadaUno(array, funcion){
+//     for(let elemento of array){
+//         funcion(elemento)
+//     }
+// }
+// //invocarla
+// porCadaUno(num, console.log)
+// porCadaUno(num2, alert)
+
+
+// //////
+
+
+
+// const numero = []
+
+
+// //METODOS AVANZADOS
+// //forEach(funcion)
+// num.forEach((numero)=>{
+//     //a cada elemento del array aplicar estas instrucciones
+//     console.log(numero)
+// })
+
+// //FOREACH 
+//va a recorrer todo el array asignado y lo va a mostrar
+// estanteria.forEach((libro)=>{
+//     console.log(libro.id, libro.precio, libro.autor)
+//     //otra opcion  es utilizar metodo del objeto
+//     //libro.mostrarInfoLibro()
+// })
+
+//FIND 
+//recibe una funcion de comparacion por parametro
+//metodo de busqueda, si encuenta nos devuelve el elemento sino undefined
+// const cursos = [
+//     {nombre: 'Javascript', precio:15000},
+//     {nombre: 'ReactJS', precio: 22000}
+// ]
+
+// const resultado = cursos.find((el) => el.nombre === "ReactJS")
+// const resultado2 = cursos.find((el) => el.nombre === "DW")
+
+// console.log(resultado) // {nombre: 'ReactJS', precio: 22000}
+// console.log(resultado2) // undefined
+
+//ejemplo FIND
+// const num = [1,3,5,7,9,11,15]
+
+// let input = parseInt(prompt("Ingrese la tabla buscada"))
+// let tablaBuscadita = num.find((tablaBuscada) => tablaBuscada == input)
+//     if(tablaBuscadita = true ) {
+//         alert(`El modelo ${input} que consultas esta en stock`)}
+//     else {
+//         alert(`El modelo ${input} que consultas NO esta en stock`)
+//     }
+
+// /////////////
+
+// let tailBuscado  = prompt("Ingrese el modelo de la tabla buscada")
+// let tailEncontrado = num.find(
+//     (board)=> board.tail == tailBuscado
+//     )
+
 ////////////////
-//    MENU    //
+// MENU MAIN  //
 ///////////////
 function MENU(){
     let exitMenu = false
@@ -39,7 +124,7 @@ function MENU(){
 }
 
 ////////////////////////
-//CASE 1 - MENU PRINCIPAL
+//CASE 1 - MENU MAIN
 //Iniciadora de APP MEDIDOR DE VELAS kitesurf
 function iniciarMedidor(){
     let salir = false
@@ -83,7 +168,7 @@ function medidor(){
 }
 
 /////////////////////////
-//CASE 2 - MENU PRINCIPAL 
+//CASE 2 - MENU MAIN 
 //Ver todas las tablas
 function verTodas(){
     let exitMenuu = false
@@ -93,6 +178,8 @@ function verTodas(){
         1 - Ver todos los modelos con detalles
         2 - Ver los modelos ordenados por precio
         3 - Buscar stock de un modelo especifico
+        4 - Cargar modelo estandar al carrito
+        5 - Ver y filtrar tablas con cola fish
         0 - Volver al menu principal
         `))
             switch(eleccion3){
@@ -100,16 +187,22 @@ function verTodas(){
                         verTablas(tablas)
                     break
                     case 2:
-
+                        ordenadorTablas()
                     break
                     case 3:
-                        buscarModelo(tablas)
+                        buscarModelo()
+                    break
+                    case 4:
+                        cargarCarrito()
+                    break
+                    case 5:
+                        soloFish()
                     break
                     case 0:
                         exitMenuu = true
                     break
                     default:
-                        alert("Ingrese con numeros del 1 al 3 para realizar una accion. Ingrese 0 para salir.")
+                        alert("Ingrese con numeros del 1 al 5 para realizar una accion. Ingrese 0 para salir.")
                     break
                     }
     }while(!exitMenuu)
@@ -118,16 +211,32 @@ function verTodas(){
 //Ver catalogo
 function verTablas(tablas){
     tablas.forEach((tabla)=>{
-        alert(`MODELO:  
-        Nombre: ${tabla.nombre} 
-        Precio: ${tabla.precio}
-        Width: ${tabla.width}
-        Heigth: ${tabla.heigth} `)
+        alert(`MODELO: 
+                    ${tabla.nombre} 
+                    Precio: $${tabla.precio}
+                    Width: ${tabla.width}
+                    Heigth: ${tabla.heigth} `)
     })
 }
 
+//Ordenar tablas menos precio
+function ordenadorTablas(){
+    tablas.sort((a, b) => {
+        if (a.precio > b.precio) {
+            return 1;
+        }
+        if (a.precio < b.precio) {
+            return -1;
+        }
+        // a es igual a b
+        return 0;
+    })
+    alert("A continuacion vas a ver todos nuestros productos ordenados por precio de menos a mayor.")
+    verTablas(tablas)
+}
+
 //Consulta stock nombre de tablas
-function buscarModelo(array){
+function buscarModelo(){
     let modeloBuscado  = prompt(`    Fabricamos los modelos:
 
     - Wakeboard
@@ -141,7 +250,7 @@ function buscarModelo(array){
 
     Escribi la que quieras consultar si tenemos en stock.
     `).toUpperCase()
-    let modeloEncontrado = array.find(
+    let modeloEncontrado = tablas.find(
         (board)=> board.nombre == modeloBuscado
         )
     if( modeloEncontrado == undefined){
@@ -151,8 +260,53 @@ function buscarModelo(array){
     }
 }
 
+//Filtrar por cola fish
+function soloFish(){
+    const colafish = tablas.filter((el) => el.nombre.includes('fish'))
+    alert(colafish)
+}
+
+//Sumar al carrito tablas estandar
+function cargarCarrito(){
+    let exitMenu2 = false
+    do{
+        let cargaIngresada = prompt(`
+        Seleccione el modelo que desea cargar al carrito:
+
+        1 - Wakeboard
+        2 - Retrofish
+        3 - Shortfish
+        4 - Longboard
+        5 - Kiteboard
+        0 - EXIT
+        `)
+        if(cargaIngresada == 1){
+            carritoEstandar.push(wakeboard)
+            alert(`Tu tabla "wakeboard" fue cargada al carrito con exito. Para salir ingresa 0.`)
+        }else if(cargaIngresada == 2){
+            carritoEstandar.push(retrofish)
+            alert(`Tu tabla "retrofish" fue cargada al carrito con exito. Para salir ingresa 0.`)
+        }else if(cargaIngresada == 3){
+            carritoEstandar.push(shortfish)
+            alert(`Tu tabla "shortfish" fue cargada al carrito con exito. Para salir ingresa 0.`)
+        }else if(cargaIngresada == 4){
+            carritoEstandar.push(longboard)
+            alert(`Tu tabla "longboard" fue cargada al carrito con exito. Para salir ingresa 0.`)
+        }else if(cargaIngresada == 5){
+            carritoEstandar.push(kiteboard)
+            alert(`Tu tabla "kiteboard" fue cargada al carrito con exito. Para salir ingresa 0.`)
+        }else if(cargaIngresada == 0){
+            exitMenu2 = true
+        }else if((cargaIngresada == " ")||(cargaIngresada == "")){
+            alert("Ingrese un numero del 1 al 6. Ingrese 0 para salir.")
+        }else{
+            alert("Ingrese un numero del 1 al 6. Ingrese 0 para salir.") 
+        }    
+    }while(!exitMenu2 )
+}
+
 /////////////////////////
-//CASE 3 - MENU PRINCIPAL
+//CASE 3 - MENU MAIN
 //clase CONSTRUCTORA de objetos (tablas personalizadas por clientes)
 class tablaPer{
     constructor (tail, color, largo, ancho) {
@@ -183,11 +337,12 @@ Tenemos en stock:
     alert(`Tu tabla perzonalizada ${tablaPersonalizada.tail.toUpperCase()} fue cargada al carrito con exito.
             Color: ${tablaPersonalizada.color}
             Largo: ${tablaPersonalizada.largo}
-            Ancho: ${tablaPersonalizada.ancho}`)
+            Ancho: ${tablaPersonalizada.ancho}
+            Precio: $8999`)
 }
 
 /////////////////////////
-//CASE 4 - MENU PRINCIPAL
+//CASE 4 - MENU MAIN
 //Function administradora de carrito 
 function administrarCarrito(){
     let exitMenuuu = false
@@ -200,13 +355,17 @@ function administrarCarrito(){
         `))
             switch(eleccion4){
                     case 1:
-                        if(carrito.length == 0){
+                        if((carrito.length == 0) && (carritoEstandar.length == 0)){
                             alert("Su carrito esta vacio")
                         }else{
-                            verCarrito(carrito)}
+                            verCarritoEstandar(carritoEstandar)
+                            verCarrito(carrito)
+                            alert(`Tu carrito tiene un total de ${carritoEstandar.length + carrito.length} productos cargados.`)
+                        }
                     break
                     case 2:
                         carrito.splice(0, carrito.length)
+                        carritoEstandar.splice(0, carritoEstandar.length)
                         alert(`Tu carrito tiene ${carrito.length} productos. Fue borrado con exito!`)
                     break
                     case 0:
@@ -219,14 +378,25 @@ function administrarCarrito(){
         }while(!exitMenuuu)
     }
 
-//Function para ver array carrito
+//Ver carrito perzonalizado
 function verCarrito(carrito){
     carrito.forEach((personalizarTabla)=>{
-        alert(`Tienes ${tablasPersonalizadas.length} "Tabla Personalizada" en tu carrito: 
+        alert(`Tienes ${carrito.length} tablas personalizadas en tu carrito: 
         Tail: ${personalizarTabla.tail}
         Color: ${personalizarTabla.color}
         Largo: ${personalizarTabla.largo}
         Ancho: ${personalizarTabla.ancho} `)
+    })
+}
+
+//Ver carrito estandar
+function verCarritoEstandar(carritoEstandar){
+    carritoEstandar.forEach((tabla)=>{
+        alert(`Tienes ${carritoEstandar.length} tablas estandar en tu carrito:
+        Modelo: ${tabla.nombre}
+        Precio: $${tabla.precio}
+        Ancho: ${tabla.width}
+        Largo: ${tabla.heigth} `)
     })
 }
 
@@ -258,8 +428,11 @@ const tablas = []
 //ARRAY de tablas personalizadas 
 const tablasPersonalizadas = []
 
-//ARRAY de carrito
+//ARRAY de carrito perzonalizado
 const carrito = []
+
+//ARRAY de carrito estandar
+const carritoEstandar = []
 
 //INSTANCIACION de objetos (tablas estandar)
 const retrofish = new tabla("retrofish", 5600, 36, 74);
@@ -272,6 +445,7 @@ const wakeboard = new tabla("wakeboard", 5500, 35, 75);
 tablas.push(retrofish, shortfish, longboard, kiteboard, wakeboard);
 tablas.push(new tabla("bigwave", 5800, 36, 76));
 
+
 //BUCLE FOR para sumar iva a las tablas estandar
 for(const sumarI of tablas){
     sumarI.sumaIva();
@@ -279,11 +453,11 @@ for(const sumarI of tablas){
 
 
 
+
 /////////////////
 //    GO      //
 ///////////////
 const nombre = prompt("Ingrese su nombre");
+
 MENU();
 gracias(nombre);
-
-
