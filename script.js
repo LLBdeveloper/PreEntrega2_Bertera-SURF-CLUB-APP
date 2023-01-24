@@ -1,88 +1,3 @@
-// //Funciones que retornan otra funcion
-// //Creamos la funcion
-// function mayorQue(n){
-//     return (m) => m > n 
-// }
-
-// //declaramos
-// let mayorQueDoce = mayorQue (12)
-// // meyorQueDoce es (m) => m > 12
-
-// //la usamos
-// console.log(mayorQueDoce(25))
-// //true
-
-
-// //////
-
-
-// //FUNCTION QUE RECIBE OTRA FUNCTION
-// const num2 = [2,4,6]
-// //porCadaUno al tener una funcion como parametro se las considera funcion de orden superior
-// function porCadaUno(array, funcion){
-//     for(let elemento of array){
-//         funcion(elemento)
-//     }
-// }
-// //invocarla
-// porCadaUno(num, console.log)
-// porCadaUno(num2, alert)
-
-
-// //////
-
-
-
-// const numero = []
-
-
-// //METODOS AVANZADOS
-// //forEach(funcion)
-// num.forEach((numero)=>{
-//     //a cada elemento del array aplicar estas instrucciones
-//     console.log(numero)
-// })
-
-// //FOREACH 
-//va a recorrer todo el array asignado y lo va a mostrar
-// estanteria.forEach((libro)=>{
-//     console.log(libro.id, libro.precio, libro.autor)
-//     //otra opcion  es utilizar metodo del objeto
-//     //libro.mostrarInfoLibro()
-// })
-
-//FIND 
-//recibe una funcion de comparacion por parametro
-//metodo de busqueda, si encuenta nos devuelve el elemento sino undefined
-// const cursos = [
-//     {nombre: 'Javascript', precio:15000},
-//     {nombre: 'ReactJS', precio: 22000}
-// ]
-
-// const resultado = cursos.find((el) => el.nombre === "ReactJS")
-// const resultado2 = cursos.find((el) => el.nombre === "DW")
-
-// console.log(resultado) // {nombre: 'ReactJS', precio: 22000}
-// console.log(resultado2) // undefined
-
-//ejemplo FIND
-// const num = [1,3,5,7,9,11,15]
-
-// let input = parseInt(prompt("Ingrese la tabla buscada"))
-// let tablaBuscadita = num.find((tablaBuscada) => tablaBuscada == input)
-//     if(tablaBuscadita = true ) {
-//         alert(`El modelo ${input} que consultas esta en stock`)}
-//     else {
-//         alert(`El modelo ${input} que consultas NO esta en stock`)
-//     }
-
-// /////////////
-
-// let tailBuscado  = prompt("Ingrese el modelo de la tabla buscada")
-// let tailEncontrado = num.find(
-//     (board)=> board.tail == tailBuscado
-//     )
-
 ////////////////
 // MENU MAIN  //
 ///////////////
@@ -196,7 +111,7 @@ function verTodas(){
                         cargarCarrito()
                     break
                     case 5:
-                        soloFish()
+                        soloFishh()
                     break
                     case 0:
                         exitMenuu = true
@@ -264,7 +179,7 @@ function buscarModelo(){
 //Filtrar por cola fish
 function soloFish(){
     const colafish = tablas.filter((el) => el.nombre.includes('fish'))
-    alert(colafish)
+    console.log(colafish)
 }
 
 //Sumar al carrito tablas estandar
@@ -304,6 +219,12 @@ function cargarCarrito(){
             alert("Ingrese un numero del 1 al 6. Ingrese 0 para salir.") 
         }    
     }while(!exitMenu2 )
+}
+
+//Filtrar por tablas de tail fish
+function soloFishh(){
+    const soloFishhh = tablas.filter(producto => producto.nombre.includes('FISH'))
+    verTablas(soloFishhh)
 }
 
 /////////////////////////
@@ -462,3 +383,4 @@ const nombre = prompt("Ingrese su nombre");
 
 MENU();
 gracias(nombre);
+
